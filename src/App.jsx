@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { generate as id } from 'shortid';
+import { ThemeProvider } from 'styled-components';
 
 // Components
 import Navbar from './components/Navbar';
@@ -13,11 +14,13 @@ import ContainerTask from './components/ContainerTask';
 import ContainerButton from './components/ContainerButton';
 import ButtonDelete from './components/ButtonDelete';
 
+// Theme
+import colors from './theming/colors';
+
 class App extends Component {
   state = {
     isDone: false,
     lists: [],
-    color: '#DA33FF',
     selected: 'Active',
   };
 
@@ -101,48 +104,49 @@ class App extends Component {
     return (
       <>
         <GlobalStyles />
-        <Container>
-          <h1>#todo</h1>
-          <Navbar
-            handleSelectActivity={this.handleSelectActivity}
-            selected={selected}
-          />
-          {selected !== 'Completed' && (
-            <Form handleCreateTask={this.handleCreateTask} />
-          )}
-          <ContainerTask selected={selected}>
-            {localArray.map((item) => {
-              // Recorre cada la data de cada item de la lista y lo envia al componente.
-              return (
-                <Task
-                  handleCompleteTask={() => this.handleCompleteTask(item[2])}
-                  handleDeleteTask={(e) => this.handleDeleteTask(item[2], e)}
-                  id={item[2]}
-                  isDone={item[1]}
-                  selected={selected}
-                  task={item[0]}
-                />
-              );
-            })}
-          </ContainerTask>
-          {selected === 'Completed' && completed.length > 0 && (
-            <ContainerButton>
-              <ButtonDelete onClick={this.handleDeleteAll}>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 24 24'
-                  fill='white'
-                  width='12px'
-                  height='12px'
-                >
-                  <path d='M0 0h24v24H0V0z' fill='none' />
-                  <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z' />
-                </svg>
-                delete all
-              </ButtonDelete>
-            </ContainerButton>
-          )}
-        </Container>
+        <ThemeProvider theme={colors}>
+          <Container>
+            <h1>#todo</h1>
+            <Navbar
+              handleSelectActivity={this.handleSelectActivity}
+              selected={selected}
+            />
+            {selected !== 'Completed' && (
+              <Form handleCreateTask={this.handleCreateTask} />
+            )}
+            <ContainerTask selected={selected}>
+              {localArray.map((item) => {
+                return (
+                  <Task
+                    handleCompleteTask={() => this.handleCompleteTask(item[2])}
+                    handleDeleteTask={(e) => this.handleDeleteTask(item[2], e)}
+                    id={item[2]}
+                    isDone={item[1]}
+                    selected={selected}
+                    task={item[0]}
+                  />
+                );
+              })}
+            </ContainerTask>
+            {selected === 'Completed' && completed.length > 0 && (
+              <ContainerButton>
+                <ButtonDelete onClick={this.handleDeleteAll}>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 24 24'
+                    fill='white'
+                    width='12px'
+                    height='12px'
+                  >
+                    <path d='M0 0h24v24H0V0z' fill='none' />
+                    <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z' />
+                  </svg>
+                  delete all
+                </ButtonDelete>
+              </ContainerButton>
+            )}
+          </Container>
+        </ThemeProvider>
       </>
     );
   }

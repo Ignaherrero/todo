@@ -13,13 +13,13 @@ const FormStyle = styled.form`
     display: block;
     width: 24px;
     height: 24px;
-    border: 1px solid #828282;
+    border: 1px solid ${({ theme }) => theme.spanBorder};
     box-sizing: border-box;
     border-radius: 4px;
-    background-color: white;
-    background-color: ${({ isDone }) => {
-      return isDone ? '#2F80ED' : ' white';
-    }};
+    background-color: ${({ isDone }) =>
+      isDone
+        ? ({ theme }) => theme.spanBackgroundDone
+        : ({ theme }) => theme.spanBackground};
   }
 
   & label {

@@ -6,7 +6,7 @@ const Container = styled.div`
   margin: auto;
 
   & h1 {
-    color: #333333;
+    color: ${({ theme }) => theme.colorTitle};
     font-size: 3rem;
     letter-spacing: -2px;
     text-align: center;

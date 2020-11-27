@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Nav = styled.nav`
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  color: #333333;
+  color: ${({ theme }) => theme.textMenuTask};
   font-size: 1.2rem;
 
   & ul {
@@ -25,7 +25,7 @@ export const Nav = styled.nav`
     height: 4px;
     width: 100%;
     display: block;
-    background-color: #18a0fb;
+    background-color: ${({ theme }) => theme.underlineTextTask};
     /* fix that */
     bottom: 0.3px;
   }

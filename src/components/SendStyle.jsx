@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const SendStyle = styled.input`
   font-size: 1.1rem;
-  color: #ffffff;
-  background-color: #2f80ed;
+  color: ${({ theme }) => theme.buttonAddColor};
+  background-color: ${({ theme }) => theme.backgroundButtonAdd};
   font-weight: 600;
   text-align: center;
   padding: 12px;
@@ -11,7 +11,7 @@ const SendStyle = styled.input`
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0px 2px 6px rgba(127, 177, 243, 0.4);
+  box-shadow: 0px 2px 6px ${({ theme }) => theme.shadowButtonAdd};
   box-sizing: border-box;
   transform: translateX(11px);
 `;
