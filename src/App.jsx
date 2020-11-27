@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled, { createGlobalStyle, css } from 'styled-components';
 import { generate as id } from 'shortid';
 
 // Components
@@ -7,80 +6,13 @@ import Navbar from './components/Navbar';
 import Form from './components/Form';
 import Task from './components/Task';
 
-const GlobalStyles = createGlobalStyle`
-  :root{
-    font-size: 12px;
-  }
+// Styled-components
+import GlobalStyles from './components/GlobalStyle';
+import Container from './components/Container';
+import ContainerTask from './components/ContainerTask';
+import ContainerButton from './components/ContainerButton';
+import ButtonDelete from './components/ButtonDelete';
 
-  /* reset */
-  ul {
-   list-style: none;
-   padding: 0;
-   margin: 0;
-  }
-
-  /* Typography */
-  body{
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    user-select: none;
-  }
-`;
-
-const Container = styled.div`
-  min-height: 100vh;
-  width: 600px;
-  margin: auto;
-
-  & h1 {
-    color: #333333;
-    font-size: 3rem;
-    letter-spacing: -2px;
-    text-align: center;
-    font-family: 'Raleway', sans-serif;
-    transform: translate(4px, -14px);
-  }
-`;
-
-const ContainerTask = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  ${({ selected }) =>
-    selected === 'Completed'
-      ? css`
-          row-gap: 22px;
-          margin-top: 19px;
-        `
-      : css`
-          row-gap: 27px;
-        `}
-`;
-
-const ContainerButton = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-  margin-top: 32px;
-`;
-
-const ButtonDelete = styled.button`
-  display: block;
-  align-items: center;
-  width: 125px;
-  height: 41px;
-  box-sizing: border-box;
-  color: #ffffff;
-  background-color: #eb5757;
-  font-weight: 600;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transform: translateX(9px);
-
-  & svg {
-    transform: translate(-2px, 3px);
-  }
-`;
 class App extends Component {
   state = {
     isDone: false,

@@ -375,3 +375,21 @@ template {
 [hidden] {
   display: none;
 }
+
+/* Images responsive */
+
+img {
+  max-width: 100%;
+}
+
+/* box-size */
+
+body {
+  box-sizing: border-box;
+}
+
+/* input text outline google chrome */
+
+input[type="text"] {
+  outline-style: none;
+}
