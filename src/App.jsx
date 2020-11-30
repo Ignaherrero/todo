@@ -18,9 +18,9 @@ import ButtonDelete from './components/ButtonDelete';
 import colors from './theming/colors';
 
 const App = () => {
-  const [isDone, setIsDone] = useState(false);
+  const [isDone] = useState(false);
   const [lists, setLists] = useState([]);
-  const [selected, setSelected] = useState('Active');
+  const [selected, setSelected] = useState('Completed');
 
   // * create task
   const handleCreateTask = (e) => {
@@ -39,7 +39,7 @@ const App = () => {
   const handleCompleteTask = (id) => {
     const index = handleGetTask(id);
     // const localArray = lists; aca estoy copiando todo, no los objetos. por eso tengo que hacer el splice.
-    const localArray = [...lists];
+    const localArray = lists.slice();
     localArray[index].isDone = !localArray[index].isDone;
     setLists(localArray);
   };
@@ -48,7 +48,7 @@ const App = () => {
   const handleDeleteTask = (id, e) => {
     e.preventDefault();
     const index = handleGetTask(id);
-    const localArray = lists;
+    const localArray = lists.slice();
     localArray.splice(index, 1);
     setLists(localArray);
   };
@@ -76,7 +76,8 @@ const App = () => {
 
   // * delete all task
   const handleDeleteAll = () => {
-    setLists([]);
+    const localArray = lists.filter((item) => item.isDone === false);
+    setLists(localArray);
   };
 
   const localArray = handleFilterTasks();

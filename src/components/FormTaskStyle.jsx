@@ -30,6 +30,13 @@ const FormStyle = styled.form`
     margin-left: 9px;
     font-weight: 500;
   }
+
+  & button {
+    text-decoration: none;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+  }
 `;
 
 export default FormStyle;
