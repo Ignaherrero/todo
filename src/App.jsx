@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { generate as id } from 'shortid';
 import { ThemeProvider } from 'styled-components';
 
@@ -17,72 +17,57 @@ import ButtonDelete from './components/ButtonDelete';
 // Theme
 import colors from './theming/colors';
 
-class App extends Component {
-  state = {
-    isDone: false,
-    lists: [],
-    selected: 'Active',
-  };
+const App = () => {
+  const [isDone, setIsDone] = useState(false);
+  const [lists, setLists] = useState([]);
+  const [selected, setSelected] = useState('Active');
 
   // * create task
-  handleCreateTask = (e) => {
+  const handleCreateTask = (e) => {
     e.preventDefault();
 
     if (e.target.task.value.trim() !== '') {
-      const { lists, isDone, color } = this.state;
       const task = e.target.task.value;
-      const result = [task, isDone, id(), color];
-      this.setState({ lists: [...lists, result] });
+      const result = { task, isDone, id: id() };
+      setLists([...lists, result]);
 
       e.target.task.value = '';
     }
   };
 
   // * complete task
-  handleCompleteTask = (id) => {
-    const index = this.handleGetTask(id);
-    const { lists } = this.state;
-    const localArray = lists;
-    localArray[index] = [
-      localArray[index][0],
-      !localArray[index][1],
-      localArray[index][2],
-      localArray[index][3],
-    ];
-    this.setState({ lists: localArray });
+  const handleCompleteTask = (id) => {
+    const index = handleGetTask(id);
+    // const localArray = lists; aca estoy copiando todo, no los objetos. por eso tengo que hacer el splice.
+    const localArray = [...lists];
+    localArray[index].isDone = !localArray[index].isDone;
+    setLists(localArray);
   };
 
   // * it delete a task
-  handleDeleteTask = (id, e) => {
+  const handleDeleteTask = (id, e) => {
     e.preventDefault();
-    const index = this.handleGetTask(id);
-    const localArray = this.state.lists;
+    const index = handleGetTask(id);
+    const localArray = lists;
     localArray.splice(index, 1);
-    this.setState({ lists: localArray });
+    setLists(localArray);
   };
 
   // * target activity
-  handleSelectActivity = (selected) => {
-    this.setState({
-      selected,
-    });
+  const handleSelectActivity = (selected) => {
+    setSelected(selected);
   };
 
   // * get task
-  handleGetTask = (id) => {
-    const { lists } = this.state;
-    return lists.findIndex((item) => item[2] === id);
-  };
+  const handleGetTask = (id) => lists.findIndex((item) => item.id === id);
 
   // * filter task
-  handleFilterTasks = () => {
-    const { lists } = this.state;
+  const handleFilterTasks = () => {
     let result;
-    const { selected } = this.state;
     if (selected === 'Active') {
-      result = lists.filter((item) => Boolean(item[1]) === false);
+      result = lists.filter((item) => item.isDone === false);
     } else if (selected === 'Completed') {
-      result = lists.filter((item) => Boolean(item[1]) === true);
+      result = lists.filter((item) => item.isDone === true);
     } else {
       result = lists;
     }
@@ -90,66 +75,61 @@ class App extends Component {
   };
 
   // * delete all task
-  handleDeleteAll = () => {
-    this.setState({
-      lists: [],
-    });
+  const handleDeleteAll = () => {
+    setLists([]);
   };
 
-  render() {
-    const { selected } = this.state;
-    const localArray = this.handleFilterTasks();
-    const completed = this.handleFilterTasks('Completed');
+  const localArray = handleFilterTasks();
+  const completed = handleFilterTasks('Completed');
 
-    return (
-      <>
-        <GlobalStyles />
-        <ThemeProvider theme={colors}>
-          <Container>
-            <h1>#todo</h1>
-            <Navbar
-              handleSelectActivity={this.handleSelectActivity}
-              selected={selected}
-            />
-            {selected !== 'Completed' && (
-              <Form handleCreateTask={this.handleCreateTask} />
-            )}
-            <ContainerTask selected={selected}>
-              {localArray.map((item) => {
-                return (
-                  <Task
-                    handleCompleteTask={() => this.handleCompleteTask(item[2])}
-                    handleDeleteTask={(e) => this.handleDeleteTask(item[2], e)}
-                    id={item[2]}
-                    isDone={item[1]}
-                    selected={selected}
-                    task={item[0]}
-                  />
-                );
-              })}
-            </ContainerTask>
-            {selected === 'Completed' && completed.length > 0 && (
-              <ContainerButton>
-                <ButtonDelete onClick={this.handleDeleteAll}>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='white'
-                    width='12px'
-                    height='12px'
-                  >
-                    <path d='M0 0h24v24H0V0z' fill='none' />
-                    <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z' />
-                  </svg>
-                  delete all
-                </ButtonDelete>
-              </ContainerButton>
-            )}
-          </Container>
-        </ThemeProvider>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <GlobalStyles />
+      <ThemeProvider theme={colors}>
+        <Container>
+          <h1>#todo</h1>
+          <Navbar
+            handleSelectActivity={handleSelectActivity}
+            selected={selected}
+          />
+          {selected !== 'Completed' && (
+            <Form handleCreateTask={handleCreateTask} />
+          )}
+          <ContainerTask selected={selected}>
+            {localArray.map((item) => {
+              return (
+                <Task
+                  handleCompleteTask={() => handleCompleteTask(item.id)}
+                  handleDeleteTask={(e) => handleDeleteTask(item.id, e)}
+                  id={item.id}
+                  isDone={item.isDone}
+                  selected={selected}
+                  task={item.task}
+                />
+              );
+            })}
+          </ContainerTask>
+          {selected === 'Completed' && completed.length > 0 && (
+            <ContainerButton>
+              <ButtonDelete onClick={handleDeleteAll}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 24 24'
+                  fill='white'
+                  width='12px'
+                  height='12px'
+                >
+                  <path d='M0 0h24v24H0V0z' fill='none' />
+                  <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z' />
+                </svg>
+                delete all
+              </ButtonDelete>
+            </ContainerButton>
+          )}
+        </Container>
+      </ThemeProvider>
+    </>
+  );
+};
 
 export default App;

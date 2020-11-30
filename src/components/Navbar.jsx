@@ -14,7 +14,7 @@ import {
   UnderLineDivTwo,
 } from './UnderlineDiv';
 
-const Navbar = ({ handleSelectActivity, selected = 'All' }) => {
+const Navbar = ({ handleSelectActivity, selected }) => {
   return (
     <>
       <Nav>

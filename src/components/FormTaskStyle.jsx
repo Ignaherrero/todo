@@ -10,6 +10,7 @@ const FormStyle = styled.form`
   }
 
   & span {
+    cursor: pointer;
     display: block;
     width: 24px;
     height: 24px;
@@ -23,6 +24,7 @@ const FormStyle = styled.form`
   }
 
   & label {
+    cursor: pointer;
     text-decoration: ${({ isDone }) => isDone && 'line-through'};
     font-size: 1.5rem;
     margin-left: 9px;
