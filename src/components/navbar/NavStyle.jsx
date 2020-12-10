@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Nav = styled.nav`
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   color: ${({ theme }) => theme.textMenuTask};
   font-size: 1.2rem;
@@ -20,7 +20,7 @@ export const Nav = styled.nav`
   }
 
   & ul li:hover::after {
-    content: '';
+    content: "";
     position: absolute;
     height: 4px;
     width: 100%;

@@ -1,10 +1,10 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 const ContainerTask = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   ${({ selected }) =>
-    selected === 'Completed'
+    selected === "Completed"
       ? css`
           row-gap: 22px;
           margin-top: 19px;

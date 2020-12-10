@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const SendStyle = styled.input`
   font-size: 1.1rem;

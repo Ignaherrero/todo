@@ -1,6 +1,6 @@
-import ContainerTask from './ContainerTask';
+import ContainerTask from "./ContainerTask";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ContainerButton = styled.div`
   width: 100%;

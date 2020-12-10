@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -10,7 +10,7 @@ const Container = styled.div`
     font-size: 3rem;
     letter-spacing: -2px;
     text-align: center;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
     transform: translate(4px, -14px);
   }
 `;

@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const FormStyle = styled.form`
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
 
-  & input[type='checkbox'] {
+  & input[type="checkbox"] {
     display: none;
   }
 
@@ -25,7 +25,7 @@ const FormStyle = styled.form`
 
   & label {
     cursor: pointer;
-    text-decoration: ${({ isDone }) => isDone && 'line-through'};
+    text-decoration: ${({ isDone }) => isDone && "line-through"};
     font-size: 1.5rem;
     margin-left: 9px;
     font-weight: 500;
