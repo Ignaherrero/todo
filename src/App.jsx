@@ -3,9 +3,9 @@ import { generate as id } from 'shortid';
 import { ThemeProvider } from 'styled-components';
 
 // Components
-import Navbar from './components/Navbar';
-import Form from './components/Form';
-import Task from './components/Task';
+import Navbar from './components/navbar/Navbar';
+import Form from './components/form/Form';
+import Task from './components/task/Task';
 
 // Styled-components
 import GlobalStyles from './components/GlobalStyle';
@@ -16,7 +16,8 @@ import ButtonDelete from './components/ButtonDelete';
 
 // Theme
 import colors from './theming/colors';
-
+// TODO agregar localstorage
+// TODO eliminar .prettierrc
 const App = () => {
   const [isDone] = useState(false);
   const [lists, setLists] = useState([]);
