@@ -17,11 +17,13 @@ import ButtonDelete from "./components/ButtonDelete";
 // Theme
 import colors from "./theming/colors";
 // TODO agregar localstorage
-// TODO eliminar .prettierrc
 const App = () => {
   const [isDone] = useState(false);
   const [lists, setLists] = useState([]);
   const [selected, setSelected] = useState("Completed");
+
+  // * get task
+  const handleGetTask = (id) => lists.findIndex((item) => item.id === id);
 
   // * create task
   const handleCreateTask = (e) => {
@@ -58,9 +60,6 @@ const App = () => {
   const handleSelectActivity = (selected) => {
     setSelected(selected);
   };
-
-  // * get task
-  const handleGetTask = (id) => lists.findIndex((item) => item.id === id);
 
   // * filter task
   const handleFilterTasks = () => {
