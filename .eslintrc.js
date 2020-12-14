@@ -15,5 +15,7 @@ module.exports = {
   rules: {
     "arrow-body-style": "off",
     "no-shadow": "off",
+    "react/prop-types": 0,
+    "jsx-a11y/label-has-associated-control": "off",
   },
 };

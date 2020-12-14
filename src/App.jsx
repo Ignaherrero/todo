@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { generate as id } from "shortid";
 import { ThemeProvider } from "styled-components";
 
@@ -18,9 +18,21 @@ import ButtonDelete from "./components/ButtonDelete";
 import colors from "./theming/colors";
 // TODO agregar localstorage
 const App = () => {
+  // TODO sacar las cosas del estado y llevarl a state.
+
   const [isDone] = useState(false);
   const [lists, setLists] = useState([]);
-  const [selected, setSelected] = useState("Completed");
+  const [selected, setSelected] = useState("Active");
+
+  useEffect(() => {
+    const result = [];
+    if (localStorage.length > 0) {
+      Object.keys(localStorage).forEach((key) => {
+        result.push(JSON.parse(localStorage.getItem(key)));
+      });
+      setLists(result);
+    }
+  }, []);
 
   // * get task
   const handleGetTask = (id) => lists.findIndex((item) => item.id === id);
@@ -35,16 +47,22 @@ const App = () => {
       setLists([...lists, result]);
 
       e.target.task.value = "";
+      localStorage.setItem(result.id, JSON.stringify(result));
     }
   };
 
   // * complete task
   const handleCompleteTask = (id) => {
     const index = handleGetTask(id);
-    // const localArray = lists; aca estoy copiando todo, no los objetos. por eso tengo que hacer el splice.
     const localArray = lists.slice();
-    localArray[index].isDone = !localArray[index].isDone;
+    // TODO ver de usar un map, porque este tal vez muta el arreglo y es lo que quiero.
+    for (let i = 0; i < localArray.length; i += 1) {
+      if (localArray[i].id === id) {
+        localArray[i].isDone = !localArray[i].isDone;
+      }
+    }
     setLists(localArray);
+    localStorage.setItem(id, JSON.stringify(localArray[index]));
   };
 
   // * it delete a task
@@ -54,6 +72,7 @@ const App = () => {
     const localArray = lists.slice();
     localArray.splice(index, 1);
     setLists(localArray);
+    localStorage.removeItem(id);
   };
 
   // * target activity
@@ -76,8 +95,14 @@ const App = () => {
 
   // * delete all task
   const handleDeleteAll = () => {
+    // TODO ver de cambiar esto a que sea solo los true (hechos)
     const localArray = lists.filter((item) => item.isDone === false);
     setLists(localArray);
+    // TODO eliminarlos del localStorage, cambiar esto por un forEach e ir borrando
+    localStorage.clear();
+    localArray.forEach((task) =>
+      localStorage.setItem(task.id, JSON.stringify(task))
+    );
   };
 
   const localArray = handleFilterTasks();
