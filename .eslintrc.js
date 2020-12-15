@@ -1,9 +1,10 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
     es2021: true,
   },
-  extends: ["plugin:react/recommended", "airbnb", "prettier"],
+  extends: ["eslint:recommended", "plugin:react/recommended", "prettier"],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -13,9 +14,6 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
-    "arrow-body-style": "off",
-    "no-shadow": "off",
-    "react/prop-types": 0,
-    "jsx-a11y/label-has-associated-control": "off",
+    "react/prop-types": "off",
   },
 };
