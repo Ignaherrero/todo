@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { generate as id } from "shortid";
 import { ThemeProvider } from "styled-components";
 
+// Theme
+import colors from "./theming/colors";
+
 // Components
 import Navbar from "./components/navbar/Navbar";
 import Form from "./components/form/Form";
@@ -10,16 +13,11 @@ import Task from "./components/task/Task";
 // Styled-components
 import GlobalStyles from "./components/GlobalStyle";
 import Container from "./components/Container";
-import ContainerTask from "./components/ContainerTask";
+import ContainerTask from "./components/task/ContainerTask";
 import ContainerButton from "./components/ContainerButton";
-import ButtonDelete from "./components/ButtonDelete";
+import ButtonDelete from "./components/form/ButtonDelete";
 
-// Theme
-import colors from "./theming/colors";
-// TODO agregar localstorage
 const App = () => {
-  // TODO sacar las cosas del estado y llevarl a state.
-
   const [isDone] = useState(false);
   const [lists, setLists] = useState([]);
   const [selected, setSelected] = useState("Active");
@@ -55,7 +53,6 @@ const App = () => {
   const handleCompleteTask = (id) => {
     const index = handleGetTask(id);
     const localArray = lists.slice();
-    // TODO ver de usar un map, porque este tal vez muta el arreglo y es lo que quiero.
     for (let i = 0; i < localArray.length; i += 1) {
       if (localArray[i].id === id) {
         localArray[i].isDone = !localArray[i].isDone;
@@ -95,10 +92,8 @@ const App = () => {
 
   // * delete all task
   const handleDeleteAll = () => {
-    // TODO ver de cambiar esto a que sea solo los true (hechos)
     const localArray = lists.filter((item) => item.isDone === false);
     setLists(localArray);
-    // TODO eliminarlos del localStorage, cambiar esto por un forEach e ir borrando
     localStorage.clear();
     localArray.forEach((task) =>
       localStorage.setItem(task.id, JSON.stringify(task))
@@ -129,6 +124,7 @@ const App = () => {
                   handleDeleteTask={(e) => handleDeleteTask(item.id, e)}
                   id={item.id}
                   isDone={item.isDone}
+                  key={id()}
                   selected={selected}
                   task={item.task}
                 />
