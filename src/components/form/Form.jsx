@@ -5,19 +5,21 @@ import FormStyle from "./FormStyle";
 import InputStyle from "./InputStyle";
 import SendStyle from "./SendStyle";
 
-const Form = ({ handleCreateTask }) => {
+const Form = ({ handleCreateTask, selected }) => {
   return (
     <>
-      <FormStyle action="post" onSubmit={handleCreateTask}>
-        <label htmlFor="task" />
-        <InputStyle
-          id="task"
-          name="task"
-          placeholder="add details"
-          type="text"
-        />
-        <SendStyle value="Add" type="submit" />
-      </FormStyle>
+      {selected !== "Completed" && (
+        <FormStyle action="post" onSubmit={handleCreateTask}>
+          <label htmlFor="task" />
+          <InputStyle
+            id="task"
+            name="task"
+            placeholder="add details"
+            type="text"
+          />
+          <SendStyle value="Add" type="submit" />
+        </FormStyle>
+      )}
     </>
   );
 };

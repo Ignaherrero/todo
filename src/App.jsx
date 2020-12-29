@@ -8,14 +8,13 @@ import colors from "./theming/colors";
 // Components
 import Navbar from "./components/navbar/Navbar";
 import Form from "./components/form/Form";
-import Task from "./components/task/Task";
+import TaskLists from "./components/task/TaskLists";
+import Footer from "./components/footer/Footer";
 
 // Styled-components
 import GlobalStyles from "./components/GlobalStyle";
+import ContainerTodo from "./components/ContainerTodo";
 import Container from "./components/Container";
-import ContainerTask from "./components/task/ContainerTask";
-import ContainerButton from "./components/ContainerButton";
-import ButtonDelete from "./components/form/ButtonDelete";
 
 const App = () => {
   const [isDone] = useState(false);
@@ -108,46 +107,23 @@ const App = () => {
       <GlobalStyles />
       <ThemeProvider theme={colors}>
         <Container>
-          <h1>#todo</h1>
-          <Navbar
-            handleSelectActivity={handleSelectActivity}
-            selected={selected}
-          />
-          {selected !== "Completed" && (
-            <Form handleCreateTask={handleCreateTask} />
-          )}
-          <ContainerTask selected={selected}>
-            {localArray.map((item) => {
-              return (
-                <Task
-                  handleCompleteTask={() => handleCompleteTask(item.id)}
-                  handleDeleteTask={(e) => handleDeleteTask(item.id, e)}
-                  id={item.id}
-                  isDone={item.isDone}
-                  key={id()}
-                  selected={selected}
-                  task={item.task}
-                />
-              );
-            })}
-          </ContainerTask>
-          {selected === "Completed" && completed.length > 0 && (
-            <ContainerButton>
-              <ButtonDelete onClick={handleDeleteAll}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="white"
-                  width="12px"
-                  height="12px"
-                >
-                  <path d="M0 0h24v24H0V0z" fill="none" />
-                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z" />
-                </svg>
-                delete all
-              </ButtonDelete>
-            </ContainerButton>
-          )}
+          <ContainerTodo>
+            <h1>#todo</h1>
+            <Navbar
+              handleSelectActivity={handleSelectActivity}
+              selected={selected}
+            />
+            <Form handleCreateTask={handleCreateTask} selected={selected} />
+            <TaskLists
+              selected={selected}
+              handleCompleteTask={handleCompleteTask}
+              handleDeleteTask={handleDeleteTask}
+              localArray={localArray}
+              handleDeleteAll={handleDeleteAll}
+              completed={completed}
+            />
+          </ContainerTodo>
+          <Footer />
         </Container>
       </ThemeProvider>
     </>
